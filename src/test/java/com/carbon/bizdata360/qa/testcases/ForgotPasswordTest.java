@@ -1,11 +1,15 @@
 package com.carbon.bizdata360.qa.testcases;
 
+import java.io.File;
 import java.time.Duration;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.io.FileHandler;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -37,7 +41,7 @@ public class ForgotPasswordTest extends Base2 {
 	}
 
 	@Test(priority = 1)
-	public void verifyForgotPasswordFunctionality() throws Exception {
+	public void verifyForgotPasswordWithMandatoryFields() throws Exception {
 		// Navigate to login page
 		driver.get(prop.getProperty("loginUrl"));
 
@@ -63,7 +67,7 @@ public class ForgotPasswordTest extends Base2 {
 	}
 
 	@Test(priority = 2)
-	public void verifySignInURL() {
+	public void verifyForgotPasswordPageSignInURL() {
 	    // Navigate to login page
 	    driver.get(prop.getProperty("loginUrl"));
 
@@ -88,7 +92,7 @@ public class ForgotPasswordTest extends Base2 {
 	}
 
 	@Test(priority = 3)
-	public void emptyForgotPasswordField() {
+	public void verifyForgotPasswordWithEmptyFields() throws Exception {
 	    // Navigate to login page
 	    driver.get(prop.getProperty("loginUrl"));
 
@@ -104,23 +108,11 @@ public class ForgotPasswordTest extends Base2 {
 	    // Click the submit button
 	    submitButton.click();
 	    
-	 // Wait for the popup to appear
-	   /* WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-	    WebElement popup = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#ion-overlay-1")));
-
-	    // Get the shadow root of the popup
-	    WebElement shadowRoot = (WebElement) ((JavascriptExecutor) driver).executeScript("return arguments[0].shadowRoot", popup);
-
-	    // Find the element containing the message
-	    WebElement messageElement = shadowRoot.findElement(By.cssSelector("div > div > div > div"));
-
-	    // Get the text of the message
-	    String actualMessage = messageElement.getText().trim();
-
-	    // Define expected message
-	    String expectedMessage = "Form incomplete";
-
-	    // Assert that the actual message matches the expected message
-	    Assert.assertEquals(actualMessage, expectedMessage, "Actual and expected messages do not match");*/
+	    Thread.sleep(1000);
+        // Take a screenshot of the current state, including the pop-up message
+        File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+        File destinationFile = new File("C:\\Users\\Raunak MilindTripude\\git\\QAtestcaseRepository\\Screenshot\\emptyForgotPasswordField.png");
+        FileHandler.copy(screenshot, destinationFile);
+	    
 	}
 }

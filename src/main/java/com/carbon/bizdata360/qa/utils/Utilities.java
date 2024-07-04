@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Random;
 
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -33,4 +34,11 @@ public class Utilities {
 		}
 		return destinaitonScreenshotPath;
     }
+    
+    public static String generateChangePasswordWithRandomInt() {
+        Random random = new Random();
+        int randomInt = random.nextInt(10000); // Generates a random integer up to 9999
+        return "Testing@" + randomInt;
+    }
+    
 }

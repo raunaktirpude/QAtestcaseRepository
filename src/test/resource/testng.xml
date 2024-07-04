@@ -10,6 +10,8 @@
 			<class name="com.carbon.bizdata360.qa.testcases.RegisterTest" />
 			<class name="com.carbon.bizdata360.qa.testcases.LoginTest" />
 			<class name="com.carbon.bizdata360.qa.testcases.ForgotPasswordTest" />
+			<class name="com.carbon.bizdata360.qa.testcases.ChangePasswordTest" />
+			<class name="com.carbon.bizdata360.qa.testcases.UserManagement" />
 
 		</classes>
 	</test> <!--
