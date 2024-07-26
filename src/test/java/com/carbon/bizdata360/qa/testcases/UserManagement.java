@@ -256,7 +256,7 @@ public class UserManagement extends Base2 {
 	                + permissionErrorMessage + "' does not contain expected message: '" + expectedpermissionMessage + "'");
 	    }
 	
-	 @Test(priority = 3)
+	   @Test(priority = 3)
 	    public void verifyUserListInfoIcons() throws Throwable {
 	        // Enter valid credentials
 	        driver.findElement(By.id("login_username")).sendKeys(dataProp.getProperty("userMangementUser"));
@@ -295,9 +295,9 @@ public class UserManagement extends Base2 {
 	                .until(ExpectedConditions.elementToBeClickable(By.xpath("//ion-label[normalize-space()='User']")));
 	        userButton.click();
 	        
-	     // Initialize Actions class
-			Actions actions = new Actions(driver);
-			actions.moveByOffset(200, 200).click().perform();
+	        // Initialize Actions class
+	        Actions actions = new Actions(driver);
+	        actions.moveByOffset(200, 200).click().perform();
 
 	        // Wait for the loader or page stabilization
 	        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
@@ -308,25 +308,25 @@ public class UserManagement extends Base2 {
 	        WebElement infoButton = wait
 	                .until(ExpectedConditions.elementToBeClickable(By.xpath("//mat-icon[normalize-space()='info']")));
 
-	        // Retry mechanism for clicking the "Info" button
-	        for (int attempt = 0; attempt < 3; attempt++) {
-	            try {
-	                // Scroll to the "Info" button
-	                js.executeScript("arguments[0].scrollIntoView(true);", infoButton);
+	        try {
+	            // Scroll to the "Info" button
+	            js.executeScript("arguments[0].scrollIntoView(true);", infoButton);
 
-	                // Try to click the "Info" button
-	                infoButton.click();
-	                break;
-	            } catch (StaleElementReferenceException e) {
-	                System.out.println("Stale element reference, retrying...");
-	                // Find the "Info" button again
-	                infoButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//mat-icon[normalize-space()='info']")));
-	            } catch (org.openqa.selenium.ElementClickInterceptedException e) {
-	                System.out.println("Click intercepted, retrying...");
-	                Thread.sleep(1000); // Wait before retrying
-	            }
+	            // Try to click the "Info" button
+	            infoButton.click();
+	        } catch (StaleElementReferenceException e) {
+	            System.out.println("Stale element reference, re-locating the element and retrying...");
+
+	            // Re-locate the "Info" button
+	            infoButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//mat-icon[normalize-space()='info']")));
+
+	            // Scroll to the "Info" button and click it again
+	            js.executeScript("arguments[0].scrollIntoView(true);", infoButton);
+	            infoButton.click();
+	        } catch (org.openqa.selenium.ElementClickInterceptedException e) {
+	            System.out.println("Click intercepted, please check the page state.");
 	        }
-
+	        
 	        // Wait for the user details page to be visible
 	        WebElement userDetailsPage = wait
 	                .until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//a[normalize-space()='Details']")));
@@ -335,6 +335,7 @@ public class UserManagement extends Base2 {
 	        Assert.assertTrue(userDetailsPage.isDisplayed(),
 	                "Details text is not displayed after clicking on view details icon");
 	    }
+
 	  
 	 @Test(priority = 4)
 		public void verifyUserListToggleIcons() throws Throwable {
@@ -389,22 +390,24 @@ public class UserManagement extends Base2 {
 
 			// Retry mechanism for clicking the "toggle" button twice with a delay in
 			// between
-			for (int attempt = 0; attempt < 3; attempt++) {
-				try {
-					// Scroll to the "toggle" button
-					js.executeScript("arguments[0].scrollIntoView(true);", toggleButton);
+			try {
+			    // Scroll to the "toggle" button
+			    js.executeScript("arguments[0].scrollIntoView(true);", toggleButton);
 
-					// Try to click the "toggle" button twice with a delay in between
-					toggleButton.click();
-					Thread.sleep(500); // Wait before the second click
-					toggleButton.click();
-					break;
-				} catch (org.openqa.selenium.ElementClickInterceptedException e) {
-					System.out.println("Click intercepted, retrying...");
-					Thread.sleep(1000); // Wait before retrying
-				}
+			    // Wait until the "toggle" button is clickable
+			    wait.until(ExpectedConditions.elementToBeClickable(toggleButton));
+
+			    // Click the "toggle" button twice with a delay in between
+			    toggleButton.click();
+			    Thread.sleep(500); // Wait before the second click
+			    toggleButton.click();
+			} catch (org.openqa.selenium.ElementClickInterceptedException e) {
+			    System.out.println("Click intercepted, please check the page state.");
+			} catch (InterruptedException e) {
+			    e.printStackTrace();
 			}
-	 }
+
+		}
 	        
 	  @Test(priority = 5)
 	    public void verifyUpdateUser() throws Throwable {

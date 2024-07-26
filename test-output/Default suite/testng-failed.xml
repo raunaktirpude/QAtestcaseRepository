@@ -3,13 +3,13 @@
 <suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="com.carbon.bizdata360.qa.testcases.Testing">
+      <class name="com.carbon.bizdata360.qa.testcases.UserManagement">
         <methods>
+          <include name="verifyCreateUserWithMandatoryField"/>
           <include name="tearDown"/>
-          <include name="verifyUserListToggleIcons"/>
           <include name="setUp"/>
         </methods>
-      </class> <!-- com.carbon.bizdata360.qa.testcases.Testing -->
+      </class> <!-- com.carbon.bizdata360.qa.testcases.UserManagement -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->
